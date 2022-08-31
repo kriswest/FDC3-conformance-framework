@@ -31,147 +31,147 @@ export default () =>
       testAppContext.contextBroadcasts.contact = false;
     });
 
-    // it("Method is callable", async () => {
-    //   await window.fdc3.broadcast({
-    //     type: "fdc3.instrument",
-    //     id: { ticker: "AAPL" },
-    //   });
-    // });
+    it("Method is callable", async () => {
+      await window.fdc3.broadcast({
+        type: "fdc3.instrument",
+        id: { ticker: "AAPL" },
+      });
+    });
 
-    // it("App A adds context listener then joins channel 1 => App B joins channel 1 then broadcasts context => App A receives context from B", async () => {
-    //   const asyncWrapper = () => {
-    //     return new Promise(async (resolve) => {
-    //       //Add context listener to app A
-    //       listener = await window.fdc3.addContextListener(
-    //         "fdc3.instrument",
-    //         (context) => {
-    //           expect(context.type).to.be.equals("fdc3.instrument");
-    //           resolve(true);
-    //         }
-    //       );
+    it("App A adds context listener then joins channel 1 => App B joins channel 1 then broadcasts context => App A receives context from B", async () => {
+      const asyncWrapper = () => {
+        return new Promise(async (resolve) => {
+          //Add context listener to app A
+          listener = await window.fdc3.addContextListener(
+            "fdc3.instrument",
+            (context) => {
+              expect(context.type).to.be.equals("fdc3.instrument");
+              resolve(true);
+            }
+          );
 
-    //       assert.isObject(listener);
-    //       expect(typeof listener.unsubscribe).to.be.equals("function");
+          assert.isObject(listener);
+          expect(typeof listener.unsubscribe).to.be.equals("function");
 
-    //       //App A joins channel 1
-    //       await joinChannel(1);
+          //App A joins channel 1
+          await joinChannel(1);
 
-    //       //Open MockApp app. MockApp joins channel 1, then broadcasts context
-    //       window.fdc3.open("MockApp", testAppContext);
-    //       throw new Error("test error");
-    //     });
-    //   };
+          //Open MockApp app. MockApp joins channel 1, then broadcasts context
+          window.fdc3.open("MockApp", testAppContext);
+          throw new Error("test error");
+        });
+      };
 
-    //   await asyncWrapper();
-    // });
+      await asyncWrapper();
+    });
 
-    // it("App A joins channel 1 then adds context listener => App B joins channel 1 then broadcasts context => App A receives context", async () => {
-    //   const asyncWrapper = () => {
-    //     return new Promise(async (resolve) => {
-    //       const channels = await window.fdc3.getSystemChannels();
+    it("App A joins channel 1 then adds context listener => App B joins channel 1 then broadcasts context => App A receives context", async () => {
+      const asyncWrapper = () => {
+        return new Promise(async (resolve) => {
+          const channels = await window.fdc3.getSystemChannels();
 
-    //       //App A joins channel 1
-    //       await joinChannel(1);
+          //App A joins channel 1
+          await joinChannel(1);
 
-    //       //Add context listener to app A
-    //       listener = await window.fdc3.addContextListener(
-    //         "fdc3.instrument",
-    //         (context) => {
-    //           expect(context.type).to.be.equals("fdc3.instrument");
-    //           resolve(true);
-    //         }
-    //       );
+          //Add context listener to app A
+          listener = await window.fdc3.addContextListener(
+            "fdc3.instrument",
+            (context) => {
+              expect(context.type).to.be.equals("fdc3.instrument");
+              resolve(true);
+            }
+          );
 
-    //       assert.isObject(listener);
-    //       expect(typeof listener.unsubscribe).to.be.equals("function");
+          assert.isObject(listener);
+          expect(typeof listener.unsubscribe).to.be.equals("function");
 
-    //       //Open MockApp app. MockApp joins channel 1, then broadcasts context
-    //       await window.fdc3.open("MockApp", testAppContext);
-    //     });
-    //   };
+          //Open MockApp app. MockApp joins channel 1, then broadcasts context
+          await window.fdc3.open("MockApp", testAppContext);
+        });
+      };
 
-    //   await asyncWrapper();
-    // });
+      await asyncWrapper();
+    });
 
-    // it("App B joins channel 1 then broadcasts context => App A joins channel 1 => App A adds context listener then receives context from B", async () => {
-    //   const asyncWrapper = () => {
-    //     return new Promise(async (resolve) => {
-    //       //Open MockApp app. MockApp joins channel 1, then broadcasts context
-    //       await window.fdc3.open("MockApp", testAppContext);
+    it("App B joins channel 1 then broadcasts context => App A joins channel 1 => App A adds context listener then receives context from B", async () => {
+      const asyncWrapper = () => {
+        return new Promise(async (resolve) => {
+          //Open MockApp app. MockApp joins channel 1, then broadcasts context
+          await window.fdc3.open("MockApp", testAppContext);
 
-    //       //App A joins channel 1
-    //       await joinChannel(1);
+          //App A joins channel 1
+          await joinChannel(1);
 
-    //       //Add context listener to app A
-    //       listener = await window.fdc3.addContextListener(
-    //         "fdc3.instrument",
-    //         (context) => {
-    //           expect(context.type).to.be.equals("fdc3.instrument");
-    //           resolve(true);
-    //         }
-    //       );
+          //Add context listener to app A
+          listener = await window.fdc3.addContextListener(
+            "fdc3.instrument",
+            (context) => {
+              expect(context.type).to.be.equals("fdc3.instrument");
+              resolve(true);
+            }
+          );
 
-    //       assert.isObject(listener);
-    //       expect(typeof listener.unsubscribe).to.be.equals("function");
-    //     });
-    //   };
+          assert.isObject(listener);
+          expect(typeof listener.unsubscribe).to.be.equals("function");
+        });
+      };
 
-    //   await asyncWrapper();
-    // });
+      await asyncWrapper();
+    });
 
-    // it("App B broadcasts context then joins channel 1 => App A joins channel 1 => App A adds context listener then receives context from B", async () => {
-    //   const asyncWrapper = () => {
-    //     testAppContext.reverseFunctionCallOrder = true;
-    //     return new Promise(async (resolve) => {
-    //       //Open MockApp app. MockApp broadcasts context, then joins channel 1
-    //       await window.fdc3.open("MockApp", testAppContext);
+    it("App B broadcasts context then joins channel 1 => App A joins channel 1 => App A adds context listener then receives context from B", async () => {
+      const asyncWrapper = () => {
+        testAppContext.reverseFunctionCallOrder = true;
+        return new Promise(async (resolve) => {
+          //Open MockApp app. MockApp broadcasts context, then joins channel 1
+          await window.fdc3.open("MockApp", testAppContext);
 
-    //       //App A joins channel 1
-    //       await joinChannel(1);
+          //App A joins channel 1
+          await joinChannel(1);
 
-    //       //Add context listener to app A
-    //       listener = await window.fdc3.addContextListener(
-    //         "fdc3.instrument",
-    //         (context) => {
-    //           expect(context.type).to.be.equals("fdc3.instrument");
-    //           resolve(true);
-    //         }
-    //       );
+          //Add context listener to app A
+          listener = await window.fdc3.addContextListener(
+            "fdc3.instrument",
+            (context) => {
+              expect(context.type).to.be.equals("fdc3.instrument");
+              resolve(true);
+            }
+          );
 
-    //       assert.isObject(listener);
-    //       expect(typeof listener.unsubscribe).to.be.equals("function");
-    //     });
-    //   };
+          assert.isObject(listener);
+          expect(typeof listener.unsubscribe).to.be.equals("function");
+        });
+      };
 
-    //   await asyncWrapper();
-    // });
+      await asyncWrapper();
+    });
 
-    // it("App A adds instrument context listener => App A and B join channel 1 => App B broadcasts two contexts => App A receives the instrument context from B", async () => {
-    //   const asyncWrapper = async () => {
-    //     testAppContext.contextBroadcasts.contact = true;
-    //     return new Promise(async (resolve) => {
-    //       //Add context listener to app A
-    //       listener = await window.fdc3.addContextListener(
-    //         "fdc3.instrument",
-    //         (context) => {
-    //           expect(context.type).to.be.equals("fdc3.instrument");
-    //           resolve(true);
-    //         }
-    //       );
+    it("App A adds instrument context listener => App A and B join channel 1 => App B broadcasts two contexts => App A receives the instrument context from B", async () => {
+      const asyncWrapper = async () => {
+        testAppContext.contextBroadcasts.contact = true;
+        return new Promise(async (resolve) => {
+          //Add context listener to app A
+          listener = await window.fdc3.addContextListener(
+            "fdc3.instrument",
+            (context) => {
+              expect(context.type).to.be.equals("fdc3.instrument");
+              resolve(true);
+            }
+          );
 
-    //       assert.isObject(listener);
-    //       expect(typeof listener.unsubscribe).to.be.equals("function");
+          assert.isObject(listener);
+          expect(typeof listener.unsubscribe).to.be.equals("function");
 
-    //       //App A joins channel 1
-    //       joinChannel(1);
+          //App A joins channel 1
+          joinChannel(1);
 
-    //       //Open MockApp app. MockApp joins channel 1, then broadcasts both contexts
-    //       window.fdc3.open("MockApp", testAppContext);
-    //     });
-    //   };
+          //Open MockApp app. MockApp joins channel 1, then broadcasts both contexts
+          window.fdc3.open("MockApp", testAppContext);
+        });
+      };
 
-    //   await asyncWrapper();
-    // });
+      await asyncWrapper();
+    });
 
     it("App A adds two context listeners => App A and B join channel 1 => App B broadcasts two contexts => App A receives both contexts from B", async () => {
       let contextsReceived = 0;
@@ -262,7 +262,7 @@ export default () =>
       } else {
         throw new Error("Listener undefined");
       }
-      
+
       //Open MockApp app. MockApp joins channel 1, then broadcasts both contexts
       window.fdc3.open("MockApp", testAppContext);
       let wait = new Promise((resolve) => {
@@ -299,7 +299,7 @@ export default () =>
       await wait;
     });
 
-    //TEST FAILS
+    //TEST FAILS!
     it("App A adds two context listeners => App A joins and then leaves channel 1 => App B joins channel 1 and broadcasts two contexts => App A doesn't receive any context", async () => {
       testAppContext.contextBroadcasts.contact = true;
 
