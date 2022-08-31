@@ -6,18 +6,66 @@
   </head>
   <body>
     <p>Conformance Framework Mock App</p>
-    <p>This app is only used by the conformance framework for test purposes.</p>
+    <p>This app is only used by the conformance framework for test purposes</p>
     <p></p>
     <p id="context"></p>
+    <script src="lib/fdc3-compliance.js"></script>
     <script>
-      const stats = document.getElementById("context");
+      let firedOnce = false;
 
-      // Context listeners used by tests.
+      const fdc3ApiCalls = async (reverseFunctionCallOrder, contextBroadcasts) => {
+        await window.fdc3.leaveCurrentChannel();
+        switch (reverseFunctionCallOrder) {
+          case false:
+          document.getElementById("context").innerHTML += "switch reached";
+            await joinChannel();
+            broadcast(contextBroadcasts);
+            document.getElementById("context").innerHTML += "end/ ";
+            break;
+          case true:
+            await broadcast(contextBroadcasts);
+            joinChannel();
+            document.getElementById("context").innerHTML += "reverse end/ ";
+            break;
+        }
+      }
+
+      //App B joins channel 1
+      const joinChannel = async () => {
+        const channels = await window.fdc3.getSystemChannels();
+        if (channels.length > 0) {
+          try {
+            await window.fdc3.joinChannel(channels[0].id);
+            document.getElementById("context").innerHTML += "joined " + `${channels[0].id}/ `;
+          } catch (ex) {
+            throw new Error("Error while calling joinChannel in app B: " + (ex.message ?? ex))
+          }
+        } else {
+          throw new Error("No system channels available for app B");
+        }
+      }
+
+      //Broadcast from app B
+        const broadcast = async (contextBroadcasts) => {
+          for (const systemBroadcast in contextBroadcasts) {
+            if (contextBroadcasts[systemBroadcast]) {
+              await window.fdc3.broadcast({
+                "type": `fdc3.${systemBroadcast}`
+              });
+              document.getElementById("context").innerHTML += `fdc3.${systemBroadcast}` + " has been broadcast/ ";
+            }
+          };
+        }
+
+      //Retrieve context from test app
       window.fdc3.addContextListener(
-        "fdc3.testReceiver",
-        (context) => (stats.innerHTML = `Received Data: ${JSON.stringify(context)}`)
-      );
-      window.fdc3.addContextListener('fdc3.instrument');
+        "fdc3.testAppContext",
+        (context) => {
+          if (context !== undefined && firedOnce == false) {
+            firedOnce = true;
+            fdc3ApiCalls(context.reverseFunctionCallOrder, context.contextBroadcasts);
+          }
+        });
     </script>
   </body>
 </html>
