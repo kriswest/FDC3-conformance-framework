@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { assert, expect } from "chai";
 
 export default () =>
   describe("fdc3.joinChannel", () => {
@@ -14,12 +14,11 @@ export default () =>
           await window.fdc3.joinChannel(channels[0].id);
           const currentChannel = await window.fdc3.getCurrentChannel();
           expect(currentChannel).to.not.be.null;
-          //resolve(true);
         } catch (ex) {
-          throw new Error("Error while joining channel: " + (ex.message ?? ex));
+          assert.fail("Error while joining channel: " + (ex.message ?? ex));
         }
       } else {
-        throw new Error("No system channels available");
+        assert.fail("No system channels available");
       }
     });
   });

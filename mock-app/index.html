@@ -17,15 +17,12 @@
         await window.fdc3.leaveCurrentChannel();
         switch (reverseFunctionCallOrder) {
           case false:
-          document.getElementById("context").innerHTML += "switch reached";
             await joinChannel();
             broadcast(contextBroadcasts);
-            document.getElementById("context").innerHTML += "end/ ";
             break;
           case true:
             await broadcast(contextBroadcasts);
             joinChannel();
-            document.getElementById("context").innerHTML += "reverse end/ ";
             break;
         }
       }
@@ -36,7 +33,6 @@
         if (channels.length > 0) {
           try {
             await window.fdc3.joinChannel(channels[0].id);
-            document.getElementById("context").innerHTML += "joined " + `${channels[0].id}/ `;
           } catch (ex) {
             throw new Error("Error while calling joinChannel in app B: " + (ex.message ?? ex))
           }
@@ -45,21 +41,20 @@
         }
       }
 
-      //Broadcast from app B
+      //Broadcast from mock-app
         const broadcast = async (contextBroadcasts) => {
           for (const systemBroadcast in contextBroadcasts) {
             if (contextBroadcasts[systemBroadcast]) {
               await window.fdc3.broadcast({
                 "type": `fdc3.${systemBroadcast}`
               });
-              document.getElementById("context").innerHTML += `fdc3.${systemBroadcast}` + " has been broadcast/ ";
             }
           };
         }
 
       //Retrieve context from test app
       window.fdc3.addContextListener(
-        "fdc3.testAppContext",
+        "mockAppContext",
         (context) => {
           if (context !== undefined && firedOnce == false) {
             firedOnce = true;
