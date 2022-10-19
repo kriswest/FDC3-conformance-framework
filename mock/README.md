@@ -26,8 +26,4 @@ After the installation, copy the json snippet from [snippet](./fdc3-app-config-e
 
 ## Mock App Closability
 
-Some tests in some FDC3 applications require already open mock apps to be closed in some cases before they can successfully test assertions automatically. Unfortunately, the FDC3 API does not support closing of previously opened apps. The only way to work around this is to use the application specific API to close windows.
-
-One example of this has been implemented in file [mock-functions.js](./mock-functions.js) for the [Finsemble application](https://documentation.finsemble.com/docs/welcome/introduction).
-
-If you are testing against another application, **it is likely you will need to update this file**.
+Some mock apps will close themselves after completing tests by calling `window.close()`. The desktop container under test must support this.  

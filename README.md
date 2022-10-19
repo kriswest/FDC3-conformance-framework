@@ -40,7 +40,32 @@ yarn start
 
 The application will start and will open a webbrowser tab, this tab will have an error. The reason is that the app does not have a Window.FDC3 object and should be ran through the desktop agent.
 
-Here is the setup steps for the following desktop agents:
+## Mock Apps
+
+Various mock apps used for testing are opened and closed by the desktop agent being tested during test execution. These apps can be found in the `mock` folder.
+The following table shows all of the mock apps that are used by the FDC3 conformance framework tests.
+
+| Mock App Name | Used By                                                     | Intents (Contexts)                                                               |
+| ------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Channels      | fdc3.broadcast                                              |                                                                                  |
+| General       | fdc3.open                                                   |                                                                                  |
+| Intent-A      | fdc3.findIntent, fdc3.findIntentByContext, fdc3.raiseIntent | aTestingIntent (testContextX, testContextZ), sharedTestingIntent1 (testContextX) |
+| Intent-B      | fdc3.findIntent, fdc3.findIntentByContext, fdc3.raiseIntent | bTestingIntent (testContextY), sharedTestingIntent1 (testContextX, testContextY) |
+| Intent-C      | fdc3.findIntent, fdc3.findIntentByContext, fdc3.raiseIntent | cTestingIntent (testContextX)                                                    |
+
+### Mock App Configuration
+
+It is the responsibility of the FDC3 application owner (the application under test) to ensure that these mock apps are configured correctly before the tests run. An example of how to do this for Finsemble is given below:
+
+Copy the JSON snippet from [snippet](./fdc3-app-config-examples/finsemble.app-d-snippet.txt) into `/public/configs/application/appd.json` under `appd`. This will add the test app and mock apps required for conformance testing into the target desktop container application. 
+
+### Mock App Closability
+
+Some mock apps will close themselves after completing tests by calling `window.close()`. The desktop agent being tested must support this.
+
+### Run Mock Apps Silently
+
+It is advisable to have the dekstop agent that is being tested run mock applications silently. As an example of how to do this, in Finsemble you can set the `autoShow` property to `false` in the `/public/configs/application/appd.json` file under `[ExampleMockAppName]/manifest/window/options/autoShow`.
 
 ## Contributing
 
