@@ -57,7 +57,7 @@ The following table shows all of the mock apps that are used by the FDC3 conform
 
 It is the responsibility of the FDC3 application owner (the application under test) to ensure that the conformance app and the mock apps are configured correctly before the tests run. An example of how to do this for Finsemble is given below:
 
-Copy the JSON snippet from [snippet](./fdc3-app-config-examples/finsemble.app-d-snippet.txt) into `/public/configs/application/appd.json` under `appd`. This will add the test app and mock apps required for conformance testing into the target desktop container application. 
+Copy the JSON snippet from [snippet](./fdc3-app-config-examples/finsemble.app-d-snippet.txt) into `/public/configs/application/appd.json` under `appd`. This will add the conformance app and mock apps required for conformance testing into the target desktop container application. 
 
 ### Mock App Closability
 
