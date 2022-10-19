@@ -35,6 +35,7 @@
                     "launchableByUser": true
                 },
                 "Window Manager": {
+                    "titlebarType": "injected",
                     "alwaysOnTopIcon": false,
                     "FSBLHeader": {
                         "hideMaximize": false
