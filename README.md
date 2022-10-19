@@ -53,19 +53,19 @@ The following table shows all of the mock apps that are used by the FDC3 conform
 | Intent-B      | fdc3.findIntent, fdc3.findIntentByContext, fdc3.raiseIntent | bTestingIntent (testContextY), sharedTestingIntent1 (testContextX, testContextY) |
 | Intent-C      | fdc3.findIntent, fdc3.findIntentByContext, fdc3.raiseIntent | cTestingIntent (testContextX)                                                    |
 
-### Mock App Configuration
+### Configuration
 
-It is the responsibility of the FDC3 application owner (the application under test) to ensure that these mock apps are configured correctly before the tests run. An example of how to do this for Finsemble is given below:
+It is the responsibility of the FDC3 application owner (the application under test) to ensure that the conformance app and the mock apps are configured correctly before the tests run. An example of how to do this for Finsemble is given below:
 
 Copy the JSON snippet from [snippet](./fdc3-app-config-examples/finsemble.app-d-snippet.txt) into `/public/configs/application/appd.json` under `appd`. This will add the test app and mock apps required for conformance testing into the target desktop container application. 
 
 ### Mock App Closability
 
-Some mock apps will close themselves after completing tests by calling `window.close()`. The desktop agent being tested must support this.
+Some mock apps will close themselves after completing tests by calling `window.close()`. The desktop container being tested must support this.
 
 ### Run Mock Apps Silently
 
-It is advisable to have the dekstop agent that is being tested run mock applications silently. As an example of how to do this, in Finsemble you can set the `autoShow` property to `false` in the `/public/configs/application/appd.json` file under `[ExampleMockAppName]/manifest/window/options/autoShow`.
+It is advisable that the dekstop container that is being tested run the mock apps silently. As an example of how to do this, in Finsemble you can set the `autoShow` property to `false` in the `/public/configs/application/appd.json` file under `[ExampleMockAppName]/manifest/window/options/autoShow`.
 
 ## Contributing
 
