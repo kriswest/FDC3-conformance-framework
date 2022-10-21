@@ -56,19 +56,17 @@ The following table shows all of the mock apps that are used by the FDC3 conform
 
 ### Configuration
 
-It is the responsibility of the FDC3 application owner (the application under test) to ensure that the conformance app and the mock apps are configured correctly before the tests run. To do this you will need to configure the [FDC3 application directory](https://fdc3.finos.org/schemas/2.0/app-directory). A generic application directory template can be found [here](./fdc3-app-config-examples/app-directory-template.json) 
+It is the responsibility of the FDC3 application owner (the application under test) to ensure that the conformance app and the mock apps are configured correctly before the tests run. To do this you will need to add the conformance app and the mock apps to the [FDC3 application directory](https://fdc3.finos.org/schemas/2.0/app-directory) of the desktop agent. A generic application directory template can be found [here](./fdc3-app-config-examples/app-directory-template.json). 
 
-An example of how to do this for Finsemble is given below:
-
-Copy the JSON snippet from [snippet](./fdc3-app-config-examples/finsemble-app-directory-example.json) into `/public/configs/application/appd.json` under `appd`. This will add the conformance app and mock apps required for conformance testing into the target desktop container application. 
+As an example, to configure the conformance app and mock apps in Finsemble, copy this JSON [snippet](./fdc3-app-config-examples/finsemble-app-directory-example.json) into `/public/configs/application/appd.json` under `appd`. This will add the conformance app and mock apps required for conformance testing into the target desktop container app. 
 
 ### Mock App Closability
 
-Some mock apps will close themselves after completing tests by calling `window.close()`. The desktop container being tested must support this.
+Some mock apps will close themselves after executing by calling `window.close()` on themselves. For this to work, you may need to set the `titlebarType` property to `"injected"` under `Conformance.manifest.foreign.components.Window Manager.titlebarType` in the appd.json file.
 
 ### Run Mock Apps Silently
 
-It is advisable that the dekstop container that is being tested run the mock apps silently. As an example of how to do this, in Finsemble you can set the `autoShow` property to `false` in the `/public/configs/application/appd.json` file under `[ExampleMockAppName]/manifest/window/options/autoShow`.
+It is advisable that the desktop container that is being tested run the mock apps silently. To do this, you can set the `autoShow` property to `false` in the `/public/configs/application/appd.json` file under `[PlaceholderAppName].manifest.window.options.autoShow`.
 
 ## Contributing
 
