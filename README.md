@@ -62,7 +62,7 @@ As an example, to configure the conformance app and mock apps in Finsemble, copy
 
 ### Mock App Closability
 
-Some mock apps will close themselves after executing by calling `window.close()` on themselves. For this to work, you may need to set the `titlebarType` property to `"injected"` under `Conformance.manifest.foreign.components.Window Manager.titlebarType` in the appd.json file.
+Some mock apps will close after executing by calling `window.close()` on themselves. For this to work, you may need to set the `titlebarType` property to `"injected"` under `Conformance.manifest.foreign.components.Window Manager.titlebarType` in the appd.json file.
 
 ### Run Mock Apps Silently
 
